@@ -1,0 +1,5 @@
+Experiment started at 2025-03-11 19:02:24
+Using device: cpu
+Total Parameters: 4731978
+Using device: cpu
+Model on GPU: False

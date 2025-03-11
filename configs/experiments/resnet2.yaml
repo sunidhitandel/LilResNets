@@ -1,3 +1,0 @@
-# configs/experiments/resnet50.yaml
-num_blocks: [3, 4, 6, 3]
-num_channels: 64

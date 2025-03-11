@@ -1,98 +1,65 @@
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import DataLoader
-from tqdm import tqdm
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
-import pandas as pd
 import os
+import torch
+import numpy as np
+import pandas as pd
+from tqdm import tqdm
+from core.dataset import get_test_data_loader
+from core.models.resnet import get_model
+from core.utils import get_device
 
-from .metrics import AverageMeter, calculate_accuracy
+def get_device():
+    """Get the best available device (CUDA > MPS > CPU)"""
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+    elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+        device = torch.device("mps")
+    else:
+        device = torch.device("cpu")
+    return device
 
-def test_epoch(model, val_loader, criterion, device, config):
-    """Evaluate model on validation data"""
+
+def test(config, model_path, output_dir, logger=None):
+    """Generate predictions for unlabeled test data"""
+    device = get_device()
+
+    # Create output directory if it doesn't exist
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    test_loader = get_test_data_loader(config)
+    model = get_model(config)
+    model = model.to(device)
+    checkpoint = torch.load(model_path, map_location=device)
+    if 'state_dict' in checkpoint:
+        model.load_state_dict(checkpoint['state_dict'])
+    else:
+        model.load_state_dict(checkpoint)
+    
+    if logger:
+        logger.log_message(f"Loaded model from {model_path}")
+        if 'epoch' in checkpoint:
+            logger.log_message(f"Model checkpoint from epoch {checkpoint['epoch']}")
+    
     model.eval()
-    losses = AverageMeter()
-    accs = AverageMeter()
+    all_preds = []
+    all_ids = []
     
     with torch.no_grad():
-        pbar = tqdm(val_loader, desc="Evaluating")
-        for batch_idx, (inputs, targets) in enumerate(pbar):
-            inputs, targets = inputs.to(device), targets.to(device)
+        for inputs, ids in tqdm(test_loader, desc="Generating predictions"):
+            inputs = inputs.to(device)
+            outputs = model(inputs)
+            _, predicted = outputs.max(1)
             
-            # Forward pass
-            if config.use_amp and torch.cuda.is_available():
-                with torch.cuda.amp.autocast():
-                    outputs = model(inputs)
-                    loss = criterion(outputs, targets)
-            else:
-                outputs = model(inputs)
-                loss = criterion(outputs, targets)
-            
-            # Compute accuracy and update metrics
-            acc = calculate_accuracy(outputs, targets)
-            losses.update(loss.item(), inputs.size(0))
-            accs.update(acc, inputs.size(0))
-            
-            # Update progress bar
-            pbar.set_postfix({
-                'val_loss': f'{losses.avg:.4f}',
-                'val_acc': f'{accs.avg:.4f}'
-            })
-    return losses.avg, accs.avg
+            all_preds.extend(predicted.cpu().numpy().tolist())
+            all_ids.extend(ids.tolist())
+    submission_df = pd.DataFrame({
+        'ID': all_ids,
+        'Labels': all_preds
+    })
+    submission_path = f"{output_dir}/submission.csv"
+    submission_df.to_csv(submission_path, index=False)
+    if logger:
+        logger.log_message(f"Predictions saved to {submission_path}")
+    
+    return submission_path
 
-def evaluate(model, val_loader, criterion, device, config, class_names=None, visualize=True):
-    """Full evaluation with optional visualization and confusion matrix"""
-    model.eval()
-    val_loss, val_acc = test_epoch(model, val_loader, criterion, device, config)
-    
-    # If visualization is requested
-    if visualize:
-        # Generate confusion matrix
-        all_preds = []
-        all_targets = []
-        
-        with torch.no_grad():
-            for inputs, targets in val_loader:
-                inputs, targets = inputs.to(device), targets.to(device)
-                outputs = model(inputs)
-                _, preds = torch.max(outputs, 1)
-                
-                all_preds.extend(preds.cpu().numpy())
-                all_targets.extend(targets.cpu().numpy())
-        
-        cm = confusion_matrix(all_targets, all_preds)
-        
-        # Create a confusion matrix plot
-        plt.figure(figsize=(10, 8))
-        if class_names is None:
-            class_names = [str(i) for i in range(10)]  # Default CIFAR-10 classes
-        
-        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
-                    xticklabels=class_names, yticklabels=class_names)
-        plt.xlabel('Predicted')
-        plt.ylabel('True')
-        plt.title('Confusion Matrix')
-        
-        # Save the confusion matrix
-        save_path = os.path.join(config.save_dir, config.experiment_name, 'confusion_matrix.png')
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path)
-        plt.close()
-        
-        # Print classification report if sklearn is available
-        try:
-            from sklearn.metrics import classification_report
-            report = classification_report(all_targets, all_preds, target_names=class_names)
-            print("\nClassification Report:\n", report)
-            
-            # Save report to file
-            with open(os.path.join(config.save_dir, config.experiment_name, 'classification_report.txt'), 'w') as f:
-                f.write(report)
-        except ImportError:
-            pass
-    
-    return val_loss, val_acc

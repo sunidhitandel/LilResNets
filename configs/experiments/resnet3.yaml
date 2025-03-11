@@ -1,6 +1,0 @@
-# configs/experiments/custom_resnet.yaml
-num_blocks: [4, 4, 3]
-conv_kernel_sizes: [3, 3, 3]
-shortcut_kernel_sizes: [1, 1, 1]
-num_channels: 64
-squeeze_and_excitation: 1

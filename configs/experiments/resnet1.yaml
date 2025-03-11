@@ -1,3 +1,0 @@
-# configs/experiments/resnet18.yaml
-num_blocks: [2, 2, 2, 2]
-num_channels: 64
