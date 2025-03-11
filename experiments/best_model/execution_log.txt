@@ -3,3 +3,8 @@ Using device: cpu
 Total Parameters: 4731978
 Using device: cpu
 Model on GPU: False
+Epoch 1/1 Val - Loss: 1.8924 | Accuracy: 33.3000
+Training complete. Best validation accuracy: 33.30%
+Loaded model from experiments\best_model\best_model.pt
+Model checkpoint from epoch 1
+Predictions saved to experiments\best_model\test_results/submission.csv

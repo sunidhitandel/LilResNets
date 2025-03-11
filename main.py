@@ -28,9 +28,9 @@ def main():
         save_path = test(config, model_path, output_dir, logger)
         print(f"Testing complete. File saved at: {save_path}")
         
-        print("Generating sample images...")
-        save_sample_images(config, experiment_dir)
-        print(f"Sample images saved to {experiment_dir}/sample_images")
+        print("Execution completed")
+        #save_sample_images(config, experiment_dir)
+        #print(f"Sample images saved to {experiment_dir}/sample_images")
 
     except Exception as e:
         print("An error occurred during the execution:")
