@@ -73,7 +73,7 @@ def train_epoch(model, train_loader, criterion, optimizer, device, config):
         
         if scaler is not None:
             # Use AMP for forward pass
-            with torch.cuda.amp.autocast():
+            with torch.amp.autocast("cuda"):
                 outputs = model(inputs)
                 loss = criterion(outputs, targets)
             
