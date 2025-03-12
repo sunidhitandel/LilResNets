@@ -60,7 +60,7 @@ def train_epoch(model, train_loader, criterion, optimizer, device, config):
     total = 0
     
     # Enable automatic mixed precision training if specified
-    scaler = torch.cuda.amp.GradScaler() if config.get('use_amp', False) else None
+    scaler = torch.amp.GradScaler("cuda") if config.get('use_amp', False) else None
     
     # Create progress bar for training
     pbar = tqdm(train_loader, desc="Training")
