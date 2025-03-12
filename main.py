@@ -9,6 +9,8 @@ from core.train import train
 from core.test import test
 from core.utils import setup_experiment, load_config
 from core.dataset import save_sample_images
+import warnings
+warnings.filterwarnings("ignore")
 
 def main():
     try:
