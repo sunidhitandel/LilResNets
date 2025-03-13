@@ -18,7 +18,7 @@ def main():
         config_path = f'configs/experiments/{model_name}.yaml'
         
         config = load_config(config_path)
-        experiment_dir, logger = setup_experiment(config)
+        experiment_dir, logger = setup_experiment(model_name, config)
         
         print("Starting training...")
         best_acc, metrics_df = train(model_name, config, experiment_dir, logger)

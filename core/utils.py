@@ -30,9 +30,9 @@ def load_config(config_path):
         config = yaml.safe_load(f)
     return config
 
-def setup_experiment(config):
+def setup_experiment(model_name, config):
     """Set up experiment directory and logger"""
-    experiment_name = config.get('model_name', 'best_model')
+    experiment_name = model_name
     #timestamp = datetime.now().strftime('%Y%m%d_%H%M')
     experiment_dir = os.path.join('experiments', experiment_name)
     os.makedirs(experiment_dir, exist_ok=True)
