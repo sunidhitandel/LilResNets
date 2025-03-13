@@ -56,7 +56,7 @@ class CIFARTestDataset(Dataset):
             img = self.transform(img)
         return img, img_id
 
-def test(config, model_path, output_dir, logger=None):
+def test(model_name, config, model_path, output_dir, logger=None):
     """Generate predictions for unlabeled test data"""
     device = get_device()
     test_file = "./data/cifar_test_nolabel.pkl"
@@ -66,7 +66,7 @@ def test(config, model_path, output_dir, logger=None):
     transform_test = get_transforms()
     test_dataset = CIFARTestDataset(test_images, test_ids, transform=transform_test)
     test_loader = DataLoader(test_dataset, batch_size=int(256/4), shuffle=False, num_workers=16)
-    model,_ = get_model(config)
+    model,_ = get_model(model_name, config)
     model = model.to(device)
     checkpoint = torch.load(model_path, map_location=device)
     if 'state_dict' in checkpoint:

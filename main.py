@@ -27,7 +27,8 @@ def main():
         print("Starting testing...")
         model_path = os.path.join(experiment_dir, 'best_model.pt')
         output_dir = os.path.join(experiment_dir, 'test_results')
-        save_path = test(config, model_path, output_dir, logger)
+        os.makedirs(output_dir, exist_ok=True)
+        save_path = test(model_name, config, model_path, output_dir, logger)
         print(f"Testing complete. File saved at: {save_path}")
         
         print("Execution completed")

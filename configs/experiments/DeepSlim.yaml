@@ -1,26 +1,27 @@
-# DeepSlim : 4.9M parameters
-# Deeper but thinner architecture with targeted regularization
-
-num_blocks: [3, 4, 4, 2]  
-conv_kernel_sizes: [3, 3, 3, 3]
-shortcut_kernel_sizes: [1, 1, 1, 1]
-num_channels: 48  
-avg_pool_kernel_size: 4  
-drop: 0.15  
+# HybridResNet: 4.92M parameters
+# Mixed convolution sizes with targeted regularization for CIFAR-10
+num_blocks: [4, 6, 3]
+conv_types: ['2x2', '3x3', '1x1']
+shortcut_types: ['1x1', '2x2', '1x1']
+num_channels: 64
+avg_pool_kernel_size: 4
+drop: 0.15
 squeeze_and_excitation: true
-grad_clip: 0.1
-max_epochs: 1
+se_reduction: 8
+use_bottleneck: true
+grad_clip: 0.2
+max_epochs: 200
 optim: "sgd"
 lr_sched: "CosineAnnealingLR"
 momentum: 0.9
-lr: 0.08
+lr: 0.05
 weight_decay: 0.0005
-batch_size: 256
+batch_size: 128
 num_workers: 16
 data_augmentation: 1
 data_normalize: 1
-lookahead: 0
+lookahead: 1
 label_smoothing: 0.1
 use_amp: true
-early_stopping_patience: 12
-min_delta : 0.001
+early_stopping_patience: 15
+min_delta: 0.001

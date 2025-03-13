@@ -1,0 +1,5 @@
+Experiment started at 2025-03-13 07:18:35
+Using device: cuda
+Total Parameters: 4910450
+Using device: cuda
+Model on GPU: True
