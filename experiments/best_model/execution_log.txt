@@ -1,5 +1,8 @@
-Experiment started at 2025-03-12 02:53:09
-Using device: cpu
-Total Parameters: 4697742
-Using device: cpu
-Model on GPU: False
+Experiment started at 2025-03-13 06:03:31
+Using device: cuda
+Total Parameters: 7991629
+Using device: cuda
+Model on GPU: True
+Epoch 1/1 Val - Loss: 1.7598 | Accuracy: 39.3800
+Epoch 2/2 Val - Loss: 1.6491 | Accuracy: 46.4700
+Epoch 3/3 Val - Loss: 1.5321 | Accuracy: 55.0800

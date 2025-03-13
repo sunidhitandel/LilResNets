@@ -140,7 +140,6 @@ class ResNetDeepSlim(nn.Module):
         out = self.linear(out)
         return out
 
-# Function to get the DeepSlim model
 def get_custom_model(config_dict):
     """
     Factory function that returns the DeepSlim model and its total parameters

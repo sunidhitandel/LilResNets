@@ -6,16 +6,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime
 from core.logger import Logger
-from core.models import *
-
-MODEL_MASTER_MAPPING = {
-    "ResDrop": "resdrop.py",
-    "ResReg": "resreg.py",
-    "ResWide": "reswide.py",
-    "ResMix": "resmix.py",
-    "DeepSlim": "deepslim.py",
-    "MyResNet": "myresnet.py"
-}
+from core.models.resdrop import get_custom_model as get_resdrop_model
+from core.models.resreg import get_custom_model as get_resreg_model
+from core.models.reswide import get_custom_model as get_reswide_model
+from core.models.resmix import get_custom_model as get_resmix_model
+from core.models.deepslim import get_custom_model as get_deepslim_model
+from core.models.myresnet import get_custom_model as get_myresnet_model
+import importlib
 
 def get_device():
     """Determine the available device (CUDA, MPS, or CPU)"""
@@ -43,13 +40,31 @@ def setup_experiment(config):
     return experiment_dir, logger
 
 
+MODEL_MASTER_MAPPING = {
+    "ResDrop": "resdrop",
+    "ResReg": "resreg",
+    "ResWide": "reswide",
+    "ResMix": "resmix",
+    "DeepSlim": "deepslim",
+    "MyResNet": "myresnet"
+}
+
 def get_model(model_name, config_dict):
     """Retrieve the model based on model_name and config_dict."""
-    module_name = MODEL_MASTER_MAPPING.get(model_name, "myresnet.py")
-    model_module = __import__(module_name.replace(".py", ""))
-    if hasattr(model_module, "get_custom_model"):
-        return model_module.get_custom_model(config_dict)
-    return model_module.MyResNet(config_dict)
+    model_name = model_name.lower()
+    if model_name.lower() == "deepslim":
+        model, total_params = get_deepslim_model(config_dict)
+    elif model_name.lower() == "resdrop":
+        model, total_params = get_resdrop_model(config_dict)
+    elif model_name.lower() == "resreg":
+        model, total_params = get_resreg_model(config_dict)
+    elif model_name.lower() == "reswide":
+        model, total_params = get_reswide_model(config_dict)
+    elif model_name.lower() == "resmix":
+        model, total_params = get_resmix_model(config_dict)
+    else:
+        model, total_params = get_myresnet_model(config_dict)
+    return model, total_params
 
 def save_checkpoint(state, is_best, filename, best_filename):
     """Save model checkpoint"""

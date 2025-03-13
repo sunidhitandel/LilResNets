@@ -9,7 +9,7 @@ avg_pool_kernel_size: 4
 drop: 0.15  
 squeeze_and_excitation: true
 grad_clip: 0.1
-max_epochs: 200
+max_epochs: 1
 optim: "sgd"
 lr_sched: "CosineAnnealingLR"
 momentum: 0.9
