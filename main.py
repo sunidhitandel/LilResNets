@@ -33,8 +33,8 @@ def main(config_name):
         logger.log_message(f"Testing complete. File saved at: {save_path}")
         logger.log_message("Execution completed")
 
-        # dataset.save_sample_images(config, experiment_dir)
-        # print(f"Sample images saved to {experiment_dir}/sample_images")
+        dataset.save_sample_images(config, experiment_dir)
+        print(f"Sample images saved to {experiment_dir}/sample_images")
 
     except Exception as e:
         logger.log_message("An error occurred during the execution:")

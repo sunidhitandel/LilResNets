@@ -26,3 +26,17 @@ Total Parameters: 4925716
 Epoch 1/1 Val - Loss: 2.0308 | Accuracy: 25.3700
 Epoch 2/2 Val - Loss: 1.9197 | Accuracy: 31.1900
 Epoch 3/3 Val - Loss: 1.8413 | Accuracy: 35.7700
+Epoch 4/4 Val - Loss: 1.8111 | Accuracy: 37.6600
+Epoch 5/5 Val - Loss: 1.7647 | Accuracy: 40.0400
+Epoch 6/6 Val - Loss: 1.7556 | Accuracy: 39.7700
+Epoch 7/7 Val - Loss: 1.7082 | Accuracy: 42.7100
+Epoch 8/8 Val - Loss: 1.6981 | Accuracy: 43.0300
+Epoch 9/9 Val - Loss: 1.6751 | Accuracy: 44.8400
+Epoch 10/10 Val - Loss: 1.6504 | Accuracy: 45.7600
+Epoch 11/11 Val - Loss: 1.6586 | Accuracy: 46.3600
+Epoch 12/12 Val - Loss: 1.6315 | Accuracy: 46.9900
+Epoch 13/13 Val - Loss: 1.6222 | Accuracy: 47.3300
+Epoch 14/14 Val - Loss: 1.5910 | Accuracy: 49.3400
+Epoch 15/15 Val - Loss: 1.6204 | Accuracy: 47.7200
+Epoch 16/16 Val - Loss: 1.5916 | Accuracy: 49.5100
+Epoch 17/17 Val - Loss: 1.6208 | Accuracy: 48.1800

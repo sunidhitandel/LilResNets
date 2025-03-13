@@ -11,6 +11,7 @@ from core.models import myresnet
 from core.models import prenet
 from core.models import resdrop
 from core.models import resmix
+from core.models import resnetX
 from core.models import resreg
 from core.models import reswide
 
@@ -47,16 +48,6 @@ def setup_experiment(experiment_name: str) -> str:
     return experiment_dir
 
 
-MODEL_MASTER_MAPPING = {
-    "ResDrop": "resdrop",
-    "ResReg": "resreg",
-    "ResWide": "reswide",
-    "ResMix": "resmix",
-    "DeepSlim": "deepslim",
-    "MyResNet": "myresnet",
-}
-
-
 def get_model(config_dict: dict, logger: Logger):
     """Retrieve the model based on model_name and config_dict."""
     model_name = config_dict["model_name"].lower()
@@ -69,6 +60,7 @@ def get_model(config_dict: dict, logger: Logger):
         "reswide": reswide.ResNetDeepSlim,
         "resmix": resmix.ResNetDeepSlim,
         "prenet": prenet.PreResNet,
+        "resnetx": resnetX.ResNet,
     }
 
     # Get the model class, default to MyResNet if not found

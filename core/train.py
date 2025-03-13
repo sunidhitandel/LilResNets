@@ -163,7 +163,7 @@ def train(config: str, experiment_dir: str, logger: logger.Logger):
     logger.log_message(f"Using device: {device}")
     train_loader, val_loader = get_data_loaders(config)
 
-    # Create model and
+    # Create model
     model = get_model(config, logger)
     model = model.to(device)
     logger.log_model_state(device, model)
