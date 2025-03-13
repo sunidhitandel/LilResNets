@@ -12,10 +12,12 @@ lr_sched: "CosineAnnealingLR"
 momentum: 0.9
 lr: 0.1
 weight_decay: 0.0005
-batch_size: 128
+batch_size: 256
 num_workers: 16
 data_augmentation: 1
 data_normalize: 1
 lookahead: 1
 label_smoothing: 0.1
 use_amp: true
+early_stopping_patience: 12
+min_delta : 0.0009

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from core.dataset import get_test_data_loader
-from core.models.resnet import get_model
+from LilResNets.core.models.MyResNet import get_model
 from core.utils import get_device
 
 def get_device():

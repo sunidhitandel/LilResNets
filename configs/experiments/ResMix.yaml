@@ -1,0 +1,26 @@
+# ResMix : 4.2M parameters
+# Mixed kernel sizes and asymmetric design
+
+num_blocks: [2, 4, 3]
+conv_kernel_sizes: [3, 5, 3]  # Mixed kernel sizes
+shortcut_kernel_sizes: [1, 3, 1]  # Mixed shortcut kernels
+num_channels: 64
+avg_pool_kernel_size: 8
+drop: 0.2
+squeeze_and_excitation: true
+grad_clip: 0.08
+max_epochs: 150
+optim: "sgd"
+lr_sched: "CosineAnnealingWarmRestarts"  # Warm restarts
+momentum: 0.9
+lr: 0.05
+weight_decay: 0.0008
+batch_size: 256 
+num_workers: 16
+data_augmentation: 1
+data_normalize: 1
+lookahead: 1
+label_smoothing: 0.05  # Reduced label smoothing
+use_amp: true
+early_stopping_patience: 12
+min_delta : 0.0009

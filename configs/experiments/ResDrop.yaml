@@ -1,0 +1,24 @@
+# ResMDrop : 2.8M parameters
+# Uses progressive dropout to combat overfitting
+
+num_blocks: [2, 3, 2]  # Reduced block count
+conv_kernel_sizes: [3, 3, 3]
+shortcut_kernel_sizes: [1, 1, 1]
+num_channels: 48  # Reduced from 64
+avg_pool_kernel_size: 8
+drop: 0.2  # Progressive dropout (increases with depth)
+squeeze_and_excitation: true
+grad_clip: 0.1
+max_epochs: 150
+optim: "adam"  #Adam optimiser
+lr_sched: "ReduceLROnPlateau" 
+momentum: 0.9
+lr: 0.001  # Reduced learning rate for Adam
+weight_decay: 0.001  # Increased weight decay
+batch_size: 128
+num_workers: 16
+data_augmentation: 1
+data_normalize: 1
+lookahead: 0  # Disabled lookahead
+label_smoothing: 0.2  # Increased label smoothing
+use_amp: true

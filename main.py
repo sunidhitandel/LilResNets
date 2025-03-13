@@ -14,14 +14,14 @@ warnings.filterwarnings("ignore")
 
 def main():
     try:
-        config_name = 'best_model'
-        config_path = f'configs/{config_name}.yaml'
+        model_name = 'best_model'
+        config_path = f'configs/{model_name}.yaml'
         
         config = load_config(config_path)
         experiment_dir, logger = setup_experiment(config)
         
         print("Starting training...")
-        best_acc, metrics_df = train(config, experiment_dir, logger)
+        best_acc, metrics_df = train(model_name, config, experiment_dir, logger)
         print(f"Training complete. Best accuracy: {best_acc:.2f}%")
         
         print("Starting testing...")

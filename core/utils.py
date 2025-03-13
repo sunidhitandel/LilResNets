@@ -6,6 +6,16 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime
 from core.logger import Logger
+from core.models import *
+
+MODEL_MASTER_MAPPING = {
+    "ResDrop": "resdrop.py",
+    "ResReg": "resreg.py",
+    "ResWide": "reswide.py",
+    "ResMix": "resmix.py",
+    "DeepSlim": "deepslim.py",
+    "MyResNet": "myresnet.py"
+}
 
 def get_device():
     """Determine the available device (CUDA, MPS, or CPU)"""
@@ -31,6 +41,15 @@ def setup_experiment(config):
     os.makedirs(experiment_dir, exist_ok=True)
     logger = Logger(experiment_dir)
     return experiment_dir, logger
+
+
+def get_model(model_name, config_dict):
+    """Retrieve the model based on model_name and config_dict."""
+    module_name = MODEL_MASTER_MAPPING.get(model_name, "myresnet.py")
+    model_module = __import__(module_name.replace(".py", ""))
+    if hasattr(model_module, "get_custom_model"):
+        return model_module.get_custom_model(config_dict)
+    return model_module.MyResNet(config_dict)
 
 def save_checkpoint(state, is_best, filename, best_filename):
     """Save model checkpoint"""
