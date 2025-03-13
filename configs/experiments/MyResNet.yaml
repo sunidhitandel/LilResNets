@@ -19,5 +19,5 @@ data_normalize: 1
 lookahead: 1
 label_smoothing: 0.1
 use_amp: true
-early_stopping_patience: 12
+early_stopping_patience: 20
 min_delta : 0.0009

@@ -14,7 +14,7 @@ warnings.filterwarnings("ignore")
 
 def main():
     try:
-        model_name = 'DeepSlim'
+        model_name = 'MyResNet'
         config_path = f'configs/experiments/{model_name}.yaml'
         
         config = load_config(config_path)
