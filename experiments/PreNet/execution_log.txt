@@ -1,0 +1,26 @@
+Experiment started at 2025-03-13 15:29:39
+Starting training...
+Using device: mps
+An error occurred during the execution:
+Error: Traceback (most recent call last):
+  File "/Users/maaniiii/Documents/Manish/sunidhi/LilResNets/main.py", line 20, in main
+    best_acc = train(config, experiment_dir, logger)
+  File "/Users/maaniiii/Documents/Manish/sunidhi/LilResNets/core/train.py", line 169, in train
+    model = get_model(config, logger)
+  File "/Users/maaniiii/Documents/Manish/sunidhi/LilResNets/core/utils.py", line 77, in get_model
+    return model_class.from_config(config_dict)
+  File "/Users/maaniiii/Documents/Manish/sunidhi/LilResNets/core/models/prenet.py", line 250, in from_config
+    return cls(
+  File "/Users/maaniiii/Documents/Manish/sunidhi/LilResNets/core/models/prenet.py", line 189, in __init__
+    self._make_layer(
+  File "/Users/maaniiii/Documents/Manish/sunidhi/LilResNets/core/models/prenet.py", line 214, in _make_layer
+    strides = [stride] + [1] * (num_blocks - 1)
+TypeError: unsupported operand type(s) for -: 'str' and 'int'
+
+Experiment started at 2025-03-13 15:30:13
+Starting training...
+Using device: mps
+Using device: mps
+Model on GPU: False
+Total Parameters: 4925716
+Epoch 1/1 Val - Loss: 2.0308 | Accuracy: 25.3700

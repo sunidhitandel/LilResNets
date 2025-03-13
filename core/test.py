@@ -1,13 +1,16 @@
 import os
-import torch
+
 import numpy as np
 import pandas as pd
+import torch
+from torch.utils.data import DataLoader
+from torch.utils.data import Dataset
+from torchvision import transforms
 from tqdm import tqdm
+
 from core import dataset
-from torchvision import transforms  
-from torch.utils.data import Dataset, DataLoader  
-from core import utils
 from core import logger
+from core import utils
 
 
 def test(config: dict, ckpt_path: str, output_dir: str, logger: logger.Logger):
@@ -18,16 +21,16 @@ def test(config: dict, ckpt_path: str, output_dir: str, logger: logger.Logger):
 
     # Load best checkpoint
     checkpoint = torch.load(ckpt_path, map_location=device)
-    if 'state_dict' in checkpoint:
-        model.load_state_dict(checkpoint['state_dict'])
+    if "state_dict" in checkpoint:
+        model.load_state_dict(checkpoint["state_dict"])
     else:
         model.load_state_dict(checkpoint)
-    
+
     if logger:
         logger.log_message(f"Loaded model from {ckpt_path}")
-        if 'epoch' in checkpoint:
+        if "epoch" in checkpoint:
             logger.log_message(f"Model checkpoint from epoch {checkpoint['epoch']}")
-    
+
     model.eval()
     all_preds = []
     all_ids = []
@@ -40,15 +43,11 @@ def test(config: dict, ckpt_path: str, output_dir: str, logger: logger.Logger):
             all_ids.extend(ids.tolist())
 
     # Create submission CSV (must have exactly two columns: "ID" and "Labels")
-    submission_df = pd.DataFrame({
-        "ID": all_ids,
-        "Labels": all_preds
-    })
+    submission_df = pd.DataFrame({"ID": all_ids, "Labels": all_preds})
     os.makedirs(output_dir, exist_ok=True)
     submission_path = f"{output_dir}/submission.csv"
     submission_df.to_csv(submission_path, index=False)
     if logger:
         logger.log_message(f"Predictions saved to {submission_path}")
-    
-    return submission_path
 
+    return submission_path

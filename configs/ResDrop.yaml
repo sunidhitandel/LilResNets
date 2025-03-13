@@ -11,7 +11,7 @@ squeeze_and_excitation: true
 grad_clip: 0.1
 max_epochs: 150
 optim: "adam"  #Adam optimiser
-lr_sched: "ReduceLROnPlateau" 
+lr_sched: "ReduceLROnPlateau"
 momentum: 0.9
 lr: 0.001  # Reduced learning rate for Adam
 weight_decay: 0.001  # Increased weight decay

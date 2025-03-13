@@ -1,20 +1,23 @@
 import os
+
+import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim.lr_scheduler import (
-    CosineAnnealingLR,
-    CosineAnnealingWarmRestarts,
-    ReduceLROnPlateau,
-    StepLR,
-    OneCycleLR,
-)
-import numpy as np
-import pandas as pd
+from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
+from torch.optim.lr_scheduler import OneCycleLR
+from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch.optim.lr_scheduler import StepLR
 from tqdm import tqdm
-from core.dataset import get_data_loaders
-from core.utils import get_device, save_checkpoint, plot_metrics, get_model
+
 from core import logger
+from core.dataset import get_data_loaders
+from core.utils import get_device
+from core.utils import get_model
+from core.utils import plot_metrics
+from core.utils import save_checkpoint
 
 
 def create_optimizer(config, model):

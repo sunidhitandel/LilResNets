@@ -1,19 +1,22 @@
 import os
-import yaml
-import torch
 import pickle
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
 from datetime import datetime
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import torch
+import yaml
+
 from core.logger import Logger
-from core.models import resdrop
-from core.models import resreg
-from core.models import reswide
-from core.models import resmix
 from core.models import deepslim
 from core.models import myresnet
-import importlib
+from core.models import prenet
+from core.models import resdrop
+from core.models import resmix
+from core.models import resreg
+from core.models import reswide
+
 
 def get_device():
     """Determine the available device (CUDA, MPS, or CPU)"""
@@ -60,7 +63,7 @@ MODEL_MASTER_MAPPING = {
 def get_model(config_dict: dict, logger: Logger):
     """Retrieve the model based on model_name and config_dict."""
     model_name = config_dict["model_name"].lower()
-    
+
     # Mapping model names to their respective classes
     model_map = {
         "deepslim": deepslim.HybridResNet,
@@ -68,8 +71,9 @@ def get_model(config_dict: dict, logger: Logger):
         "resreg": resreg.ResNetDeepSlim,
         "reswide": reswide.ResNetDeepSlim,
         "resmix": resmix.ResNetDeepSlim,
+        "prenet": prenet.PreResNet,
     }
-    
+
     # Get the model class, default to MyResNet if not found
     model_class = model_map.get(model_name, myresnet.ResNet)
     return model_class.from_config(config_dict)
