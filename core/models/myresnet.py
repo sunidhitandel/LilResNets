@@ -152,23 +152,17 @@ class ResNet(nn.Module):
         out = self.linear(out)
         return out
 
-def get_custom_model(config_dict):
-    """
-    Factory function that returns a model and its total parameters
-    """
-    model =  ResNet(
-            block=BasicBlock,
-            num_blocks=config_dict['num_blocks'],
-            conv_kernel_sizes=config_dict['conv_kernel_sizes'],
-            shortcut_kernel_sizes=config_dict['shortcut_kernel_sizes'],
-            num_channels=config_dict['num_channels'],
-            avg_pool_kernel_size=config_dict['avg_pool_kernel_size'],
-            drop=config_dict['drop'],
-            squeeze_and_excitation=config_dict['squeeze_and_excitation']
-        )
-
-    total_params = 0
-    for x in filter(lambda p: p.requires_grad, model.parameters()):
-        total_params += np.prod(x.data.numpy().shape)
-    return model, total_params
+    @classmethod
+    def from_config(cls, config_dict: dict) -> 'ResNet':
+        # Initialize model
+        return cls(
+                block=BasicBlock,
+                num_blocks=config_dict['num_blocks'],
+                conv_kernel_sizes=config_dict['conv_kernel_sizes'],
+                shortcut_kernel_sizes=config_dict['shortcut_kernel_sizes'],
+                num_channels=config_dict['num_channels'],
+                avg_pool_kernel_size=config_dict['avg_pool_kernel_size'],
+                drop=config_dict['drop'],
+                squeeze_and_excitation=config_dict['squeeze_and_excitation']
+            )
 

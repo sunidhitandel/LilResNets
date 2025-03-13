@@ -1,3 +1,4 @@
+model_name: "MyResNet"
 num_blocks: [4, 4, 3]
 conv_kernel_sizes: [3, 3, 3]
 shortcut_kernel_sizes: [1, 1, 1]

@@ -287,27 +287,22 @@ class HybridResNet(nn.Module):
         out = self.linear(out)
         return out
 
+    @classmethod
+    def from_config(cls, config_dict: dict) -> 'HybridResNet':
 
-def get_custom_model(config_dict):
-    # Choose block type based on config
-    if config_dict.get('use_bottleneck', False):
-        block = HybridBottleneck
-    else:
-        block = HybridBasicBlock
-    
-    model = HybridResNet(
-        block=block,
-        num_blocks=config_dict['num_blocks'],
-        conv_types=config_dict['conv_types'],
-        shortcut_types=config_dict['shortcut_types'],
-        num_classes=10,
-        num_channels=config_dict['num_channels'],
-        avg_pool_kernel_size=config_dict['avg_pool_kernel_size'],
-        drop=config_dict['drop'],
-        squeeze_and_excitation=config_dict['squeeze_and_excitation'],
-        se_reduction=config_dict.get('se_reduction', 16)
-    )
-
-    total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"Total trainable parameters: {total_params}")
-    return model, total_params
+        # Choose block type based on config
+        block = HybridBottleneck if config_dict.get('use_bottleneck', False) else HybridBasicBlock
+        
+        # Initialize model
+        return cls(
+            block=block,
+            num_blocks=config_dict['num_blocks'],
+            conv_types=config_dict['conv_types'],
+            shortcut_types=config_dict['shortcut_types'],
+            num_classes=config_dict.get('num_classes', 10),  # Default: 10 classes
+            num_channels=config_dict['num_channels'],
+            avg_pool_kernel_size=config_dict['avg_pool_kernel_size'],
+            drop=config_dict['drop'],
+            squeeze_and_excitation=config_dict['squeeze_and_excitation'],
+            se_reduction=config_dict.get('se_reduction', 16)  # Default: 16
+        )

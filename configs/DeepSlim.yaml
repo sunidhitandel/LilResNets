@@ -1,5 +1,6 @@
 # HybridResNet: 4.92M parameters
 # Mixed convolution sizes with targeted regularization for CIFAR-10
+model_name: "DeepSlim"
 num_blocks: [4, 6, 3]
 conv_types: ['2x2', '3x3', '1x1']
 shortcut_types: ['1x1', '2x2', '1x1']

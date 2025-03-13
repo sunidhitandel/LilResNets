@@ -1,6 +1,6 @@
 # ResWide : 3.8M parameters
 # Wider but shallower network with targeted regularization
-
+model_name: "ResWide"
 num_blocks: [2, 2, 1]  # Reduced depth
 conv_kernel_sizes: [3, 3, 5]  # Larger kernels at deeper layers
 shortcut_kernel_sizes: [3, 1, 1]  # Wider shortcuts early

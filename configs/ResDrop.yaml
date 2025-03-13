@@ -1,6 +1,6 @@
 # ResMDrop : 2.8M parameters
 # Uses progressive dropout to combat overfitting
-
+model_name: "ResDrop"
 num_blocks: [2, 3, 2]  # Reduced block count
 conv_kernel_sizes: [3, 3, 3]
 shortcut_kernel_sizes: [1, 1, 1]

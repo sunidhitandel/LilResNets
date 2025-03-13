@@ -140,11 +140,9 @@ class ResNetDeepSlim(nn.Module):
         out = self.linear(out)
         return out
 
-def get_custom_model(config_dict):
-    """
-    Factory function that returns the DeepSlim model and its total parameters
-    """
-    model = ResNetDeepSlim(
+    @classmethod
+    def from_config(cls, config_dict: dict) -> 'ResNetDeepSlim':
+        return cls(
             block=BasicBlock,
             num_blocks=config_dict['num_blocks'],
             conv_kernel_sizes=config_dict['conv_kernel_sizes'],
@@ -154,8 +152,3 @@ def get_custom_model(config_dict):
             drop=config_dict['drop'],
             squeeze_and_excitation=config_dict['squeeze_and_excitation']
         )
-
-    total_params = 0
-    for x in filter(lambda p: p.requires_grad, model.parameters()):
-        total_params += np.prod(x.data.numpy().shape)
-    return model, total_params

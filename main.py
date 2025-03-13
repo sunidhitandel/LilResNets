@@ -1,44 +1,46 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import os
-import yaml
+import argparse
 import traceback
-from datetime import datetime
 from core.train import train
 from core.test import test
-from core.utils import setup_experiment, load_config
-from core.dataset import save_sample_images
+from core import utils
+from core import dataset
+from core import logger as log
 import warnings
 warnings.filterwarnings("ignore")
 
-def main():
+def main(config_name):
     try:
-        model_name = 'MyResNet'
-        config_path = f'configs/experiments/{model_name}.yaml'
+        config_path = f'configs/{config_name}.yaml'
         
-        config = load_config(config_path)
-        experiment_dir, logger = setup_experiment(model_name, config)
+        config = utils.load_config(config_path)
+        experiment_dir = utils.setup_experiment(config_name)
+        logger = log.Logger(experiment_dir)
         
-        print("Starting training...")
-        best_acc, metrics_df = train(model_name, config, experiment_dir, logger)
-        print(f"Training complete. Best accuracy: {best_acc:.2f}%")
+        logger.log_message("Starting training...")
+        best_acc = train(config, experiment_dir, logger)
+        logger.log_message(f"Training complete. Best accuracy: {best_acc:.2f}%")
         
-        print("Starting testing...")
-        model_path = os.path.join(experiment_dir, 'best_model.pt')
-        output_dir = os.path.join(experiment_dir, 'test_results')
-        os.makedirs(output_dir, exist_ok=True)
-        save_path = test(model_name, config, model_path, output_dir, logger)
-        print(f"Testing complete. File saved at: {save_path}")
-        
-        print("Execution completed")
-        #save_sample_images(config, experiment_dir)
-        #print(f"Sample images saved to {experiment_dir}/sample_images")
+        logger.log_message("Starting testing...")
+        save_path = test(
+            config=config,
+            ckpt_path=os.path.join(experiment_dir, 'best_model.pt'),
+            output_dir=os.path.join(experiment_dir, 'test_results'),
+            logger=logger
+        )
+        logger.log_message(f"Testing complete. File saved at: {save_path}")
+        logger.log_message("Execution completed")
 
+        #dataset.save_sample_images(config, experiment_dir)
+        #print(f"Sample images saved to {experiment_dir}/sample_images")
+    
     except Exception as e:
-        print("An error occurred during the execution:")
-        print(f"Error: {e}")
-        traceback.print_exc()
+        logger.log_message("An error occurred during the execution:")
+        logger.log_message(f"Error: {traceback.format_exc()}")
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Train and Test a Model')
+    parser.add_argument('--config_name', type=str, default='MyResNet', help='Name of the config to use')
+    args = parser.parse_args()
+    
+    main(args.config_name)

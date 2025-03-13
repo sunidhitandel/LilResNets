@@ -1,6 +1,6 @@
 # ResReg : 3.4M parameters
 # Uses varied kernel sizes and strong regularization
-
+model_name: "ResReg"
 num_blocks: [3, 4, 2]
 conv_kernel_sizes: [5, 3, 3]  # Larger kernels early
 shortcut_kernel_sizes: [1, 1, 1]

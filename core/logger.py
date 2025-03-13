@@ -15,7 +15,7 @@ class Logger:
             'lr': []
         }
         self.execution_log_path = os.path.join(log_dir, 'execution_log.txt')
-        with open(self.execution_log_path, 'w') as f:
+        with open(self.execution_log_path, 'a') as f:
             f.write(f"Experiment started at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 
     def log_metrics(self, epoch, train_loss, train_acc, val_loss, val_acc, lr):
@@ -39,16 +39,11 @@ class Logger:
         """Log a message to the execution log"""
         with open(self.execution_log_path, 'a') as f:
             f.write(f"{message}\n")
-    
-    def log_params(self, model):
-        """Log model parameters"""
+
+    def log_model_state(self, device, model):
+        """Log model state"""
         total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-        with open(self.execution_log_path, 'a') as f:
-            f.write(f"Total Parameters: {total_params}\n")
-        return total_params
-    
-    def log_device(self, device, model):
-        """Log device information"""
         with open(self.execution_log_path, 'a') as f:
             f.write(f"Using device: {device}\n")
             f.write(f"Model on GPU: {next(model.parameters()).is_cuda}\n")
+            f.write(f"Total Parameters: {total_params}\n")

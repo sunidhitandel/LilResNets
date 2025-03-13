@@ -1,18 +1,16 @@
 import os
-import pickle
+
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 import dataclasses
+from core import utils
+
 dataset_dir = "./data/cifar-10-python/cifar-10-batches-py/"
 val_dataset_dir = "./data/cifar-10-python/cifar-10-batches-py/test_batch"
 test_dataset_dir = "./data/cifar_test_nolabel.pkl"
-def unpickle(file):
-    """Unpickle the CIFAR-10 data files"""
-    with open(file, 'rb') as fo:
-        data_dict = pickle.load(fo, encoding='bytes')
-    return data_dict
+
 
 
 @dataclasses.dataclass
@@ -87,7 +85,7 @@ def load_train_data(config):
     data_list, labels_list = [], []
     for i in range(1, 6):
         batch_file = os.path.join(dataset_dir, f"data_batch_{i}")
-        batch = unpickle(batch_file)
+        batch = utils.unpickle(batch_file)
         data_list.append(batch[b'data'])
         labels_list.extend(batch[b'labels'])
     X = np.concatenate(data_list, axis=0)
@@ -96,12 +94,12 @@ def load_train_data(config):
 
 def load_val_data(config):
     """Load CIFAR-10 test data"""
-    val_batch = unpickle(val_dataset_dir)
+    val_batch = utils.unpickle(val_dataset_dir)
     return CIFARDataset(val_batch[b'data'], val_batch[b'labels'], transform=get_val_transforms(config.add_normalization))
 
 def load_test_data(config):
     """Load CIFAR-10 test data"""
-    test_batch = unpickle(test_dataset_dir)
+    test_batch = utils.unpickle(test_dataset_dir)
     return CIFARTestDataset(test_batch[b'data'], transform=get_val_transforms(config.add_normalization))
 
 def get_data_loaders(config):
@@ -115,20 +113,21 @@ def get_data_loaders(config):
     train_dataset = load_train_data(data_config)
     val_dataset = load_val_data(data_config)
     
+    device = utils.get_device()
     train_loader = DataLoader(
         train_dataset,
         batch_size=config['batch_size'],
         shuffle=True,
-        num_workers=config.get('num_workers', 4),
-        pin_memory=torch.cuda.is_available()
+        num_workers=min(4, os.cpu_count()) if device == "mps" else 16,
+        pin_memory=(device == 'cuda')
     )
     
     val_loader = DataLoader(
         val_dataset,
-        batch_size=config['batch_size'],
+        batch_size=int(config['batch_size']/2),
         shuffle=False,
-        num_workers=config.get('num_workers', 4),
-        pin_memory=torch.cuda.is_available()
+        num_workers=min(4, os.cpu_count()) if device == "mps" else 16,
+        pin_memory=(device == 'cuda')
     )
     
     return train_loader, val_loader
