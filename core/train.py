@@ -137,7 +137,8 @@ def train(model_name, config, experiment_dir, logger):
     logger.log_message(f"Using device: {device}")
     train_loader, val_loader = get_data_loaders(config)
     # Create model
-    model,_ = get_model(model_name, config)
+    model,total_trainable_params = get_model(model_name, config)
+    print(f"total trainable parameters {total_trainable_params}")
     model = model.to(device)
     # Log model parameters
     total_params = logger.log_params(model)

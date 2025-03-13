@@ -14,8 +14,8 @@ warnings.filterwarnings("ignore")
 
 def main():
     try:
-        model_name = 'best_model'
-        config_path = f'configs/{model_name}.yaml'
+        model_name = 'DeepSlim'
+        config_path = f'configs/experiments/{model_name}.yaml'
         
         config = load_config(config_path)
         experiment_dir, logger = setup_experiment(config)
