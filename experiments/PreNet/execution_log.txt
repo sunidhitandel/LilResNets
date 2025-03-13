@@ -24,3 +24,5 @@ Using device: mps
 Model on GPU: False
 Total Parameters: 4925716
 Epoch 1/1 Val - Loss: 2.0308 | Accuracy: 25.3700
+Epoch 2/2 Val - Loss: 1.9197 | Accuracy: 31.1900
+Epoch 3/3 Val - Loss: 1.8413 | Accuracy: 35.7700

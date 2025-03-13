@@ -1,7 +1,3 @@
-import os
-
-import numpy as np
-import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -16,7 +12,6 @@ from core import logger
 from core.dataset import get_data_loaders
 from core.utils import get_device
 from core.utils import get_model
-from core.utils import plot_metrics
 from core.utils import save_checkpoint
 
 
