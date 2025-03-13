@@ -1,0 +1,6 @@
+Experiment started at 2025-03-13 18:32:24
+Starting training...
+Using device: mps
+Using device: mps
+Model on GPU: False
+Total Parameters: 4554130
