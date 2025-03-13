@@ -1,0 +1,102 @@
+Experiment started at 2025-03-13 10:54:11
+Starting training...
+Using device: cuda
+Using device: cuda
+Model on GPU: True
+Total Parameters: 4572046
+Epoch 1/1 Val - Loss: 2.2245 | Accuracy: 16.3900
+Epoch 2/2 Val - Loss: 2.0860 | Accuracy: 20.7800
+Epoch 3/3 Val - Loss: 1.8853 | Accuracy: 32.3800
+Epoch 4/4 Val - Loss: 1.8153 | Accuracy: 35.0300
+Epoch 5/5 Val - Loss: 1.7596 | Accuracy: 40.7600
+Epoch 6/6 Val - Loss: 1.6243 | Accuracy: 47.5200
+Epoch 7/7 Val - Loss: 1.4668 | Accuracy: 56.4000
+Epoch 8/8 Val - Loss: 1.5937 | Accuracy: 51.7400
+Epoch 9/9 Val - Loss: 1.4463 | Accuracy: 59.0200
+Epoch 10/10 Val - Loss: 1.3236 | Accuracy: 63.2500
+Epoch 11/11 Val - Loss: 1.1906 | Accuracy: 69.1500
+Epoch 12/12 Val - Loss: 1.1737 | Accuracy: 70.0600
+Epoch 13/13 Val - Loss: 1.3491 | Accuracy: 64.3500
+Epoch 14/14 Val - Loss: 1.1649 | Accuracy: 71.1800
+Epoch 15/15 Val - Loss: 1.1043 | Accuracy: 73.5900
+Epoch 16/16 Val - Loss: 1.0527 | Accuracy: 75.9900
+Epoch 17/17 Val - Loss: 1.0451 | Accuracy: 76.4400
+Epoch 18/18 Val - Loss: 0.9967 | Accuracy: 79.0100
+Epoch 19/19 Val - Loss: 0.9886 | Accuracy: 79.5000
+Epoch 20/20 Val - Loss: 1.0208 | Accuracy: 77.2500
+Epoch 21/21 Val - Loss: 1.0432 | Accuracy: 76.9800
+Epoch 22/22 Val - Loss: 1.0780 | Accuracy: 76.5600
+Epoch 23/23 Val - Loss: 1.1596 | Accuracy: 74.3100
+Epoch 24/24 Val - Loss: 1.0178 | Accuracy: 79.1200
+Epoch 25/25 Val - Loss: 1.1120 | Accuracy: 75.9900
+Epoch 26/26 Val - Loss: 0.9896 | Accuracy: 80.5400
+Epoch 27/27 Val - Loss: 0.9965 | Accuracy: 78.3800
+Epoch 28/28 Val - Loss: 1.0751 | Accuracy: 75.5600
+Epoch 29/29 Val - Loss: 0.9783 | Accuracy: 80.6400
+Epoch 30/30 Val - Loss: 0.9291 | Accuracy: 81.5900
+Epoch 31/31 Val - Loss: 1.2941 | Accuracy: 69.2800
+Epoch 32/32 Val - Loss: 1.0780 | Accuracy: 78.6200
+Epoch 33/33 Val - Loss: 0.9956 | Accuracy: 78.2900
+Epoch 34/34 Val - Loss: 1.2081 | Accuracy: 73.3700
+Epoch 35/35 Val - Loss: 0.8742 | Accuracy: 84.4700
+Epoch 36/36 Val - Loss: 1.0708 | Accuracy: 77.2900
+Epoch 37/37 Val - Loss: 1.2036 | Accuracy: 72.5700
+Epoch 38/38 Val - Loss: 0.9967 | Accuracy: 79.7300
+Epoch 39/39 Val - Loss: 0.8479 | Accuracy: 85.2300
+Epoch 40/40 Val - Loss: 1.0664 | Accuracy: 76.6000
+Epoch 41/41 Val - Loss: 0.9120 | Accuracy: 83.6900
+Epoch 42/42 Val - Loss: 0.8211 | Accuracy: 86.8000
+Epoch 43/43 Val - Loss: 0.9482 | Accuracy: 81.7300
+Epoch 44/44 Val - Loss: 0.9032 | Accuracy: 83.3900
+Epoch 45/45 Val - Loss: 0.8708 | Accuracy: 85.1500
+Epoch 46/46 Val - Loss: 0.9901 | Accuracy: 81.1700
+Epoch 47/47 Val - Loss: 0.9128 | Accuracy: 83.7800
+Epoch 48/48 Val - Loss: 0.8415 | Accuracy: 85.8600
+Epoch 49/49 Val - Loss: 0.9313 | Accuracy: 81.9000
+Epoch 50/50 Val - Loss: 0.9883 | Accuracy: 80.7700
+Epoch 51/51 Val - Loss: 0.8642 | Accuracy: 84.7600
+Epoch 52/52 Val - Loss: 0.8463 | Accuracy: 86.0600
+Epoch 53/53 Val - Loss: 0.8009 | Accuracy: 87.9500
+Epoch 54/54 Val - Loss: 0.9767 | Accuracy: 81.4000
+Epoch 55/55 Val - Loss: 1.0504 | Accuracy: 77.9000
+Epoch 56/56 Val - Loss: 0.8714 | Accuracy: 84.4600
+Epoch 57/57 Val - Loss: 0.8779 | Accuracy: 85.0000
+Epoch 58/58 Val - Loss: 1.0403 | Accuracy: 79.6300
+Epoch 59/59 Val - Loss: 0.8925 | Accuracy: 84.3700
+Epoch 60/60 Val - Loss: 0.9230 | Accuracy: 82.8900
+Epoch 61/61 Val - Loss: 0.8320 | Accuracy: 86.6200
+Epoch 62/62 Val - Loss: 0.9593 | Accuracy: 82.1800
+Epoch 63/63 Val - Loss: 0.8157 | Accuracy: 86.6100
+Epoch 64/64 Val - Loss: 0.9138 | Accuracy: 83.7000
+Epoch 65/65 Val - Loss: 0.9361 | Accuracy: 83.0100
+Epoch 66/66 Val - Loss: 0.8299 | Accuracy: 86.7200
+Epoch 67/67 Val - Loss: 0.8349 | Accuracy: 86.5700
+Epoch 68/68 Val - Loss: 0.8729 | Accuracy: 85.0400
+Epoch 69/69 Val - Loss: 1.0656 | Accuracy: 78.4600
+Epoch 70/70 Val - Loss: 0.8383 | Accuracy: 86.0700
+Epoch 71/71 Val - Loss: 0.8331 | Accuracy: 87.0700
+Epoch 72/72 Val - Loss: 0.8519 | Accuracy: 86.3600
+Epoch 73/73 Val - Loss: 0.8402 | Accuracy: 86.1900
+Early stopping triggered!!!
+Training complete. Best validation accuracy: 87.95%
+Training complete. Best accuracy: 87.95%
+Starting testing...
+Loaded model from experiments/ResNetX/best_model.pt
+Model checkpoint from epoch 53
+Predictions saved to experiments/ResNetX/test_results/submission.csv
+Testing complete. File saved at: experiments/ResNetX/test_results/submission.csv
+Execution completed
+An error occurred during the execution:
+Error: Traceback (most recent call last):
+  File "/content/LilResNets/main.py", line 36, in main
+    dataset.save_sample_images(config, experiment_dir)
+  File "/content/LilResNets/core/dataset.py", line 228, in save_sample_images
+    save_samples(train_dataset, "train")
+  File "/content/LilResNets/core/dataset.py", line 219, in save_samples
+    img_pil = Image.fromarray(img)
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/PIL/Image.py", line 3300, in fromarray
+    arr = obj.__array_interface__
+          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute '__array_interface__'
+
