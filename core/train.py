@@ -1,3 +1,5 @@
+import os
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -167,6 +169,15 @@ def train(config: str, experiment_dir: str, logger: logger.Logger):
     model = get_model(config, logger)
     model = model.to(device)
     logger.log_model_state(device, model)
+
+    # Check if old checkpoint exists
+    ckpt_path = os.path.join(experiment_dir, "best_model.pt")
+    if os.path.exists(ckpt_path):
+        checkpoint = torch.load(ckpt_path, map_location=device)
+        if "state_dict" in checkpoint:
+            model.load_state_dict(checkpoint["state_dict"])
+        else:
+            model.load_state_dict(checkpoint)
 
     # Create loss function
     criterion = nn.CrossEntropyLoss(

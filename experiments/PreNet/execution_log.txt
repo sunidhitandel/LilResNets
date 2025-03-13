@@ -40,3 +40,44 @@ Epoch 14/14 Val - Loss: 1.5910 | Accuracy: 49.3400
 Epoch 15/15 Val - Loss: 1.6204 | Accuracy: 47.7200
 Epoch 16/16 Val - Loss: 1.5916 | Accuracy: 49.5100
 Epoch 17/17 Val - Loss: 1.6208 | Accuracy: 48.1800
+Epoch 18/18 Val - Loss: 1.5736 | Accuracy: 50.6600
+Epoch 19/19 Val - Loss: 1.5876 | Accuracy: 49.6900
+Epoch 20/20 Val - Loss: 1.5394 | Accuracy: 52.4100
+Epoch 21/21 Val - Loss: 1.6017 | Accuracy: 50.3600
+Epoch 22/22 Val - Loss: 1.6152 | Accuracy: 49.1000
+Epoch 23/23 Val - Loss: 1.6746 | Accuracy: 48.0300
+Epoch 24/24 Val - Loss: 1.5792 | Accuracy: 50.1000
+Epoch 25/25 Val - Loss: 1.5248 | Accuracy: 52.6200
+Epoch 26/26 Val - Loss: 1.4979 | Accuracy: 53.9800
+
+
+Experiment started at 2025-03-13 16:40:27
+Starting training...
+Using device: mps
+Using device: mps
+Model on GPU: False
+Total Parameters: 4925716
+Epoch 1/1 Val - Loss: 1.6598 | Accuracy: 45.6600
+Epoch 2/2 Val - Loss: 1.5174 | Accuracy: 53.3300
+Epoch 3/3 Val - Loss: 1.4450 | Accuracy: 56.0200
+Epoch 4/4 Val - Loss: 1.5175 | Accuracy: 55.9100
+Epoch 5/5 Val - Loss: 1.4062 | Accuracy: 60.5400
+Epoch 6/6 Val - Loss: 1.3290 | Accuracy: 63.8100
+Epoch 7/7 Val - Loss: 1.5372 | Accuracy: 58.0800
+Epoch 8/8 Val - Loss: 1.2343 | Accuracy: 67.8500
+Epoch 9/9 Val - Loss: 1.2582 | Accuracy: 66.8400
+Epoch 10/10 Val - Loss: 1.2153 | Accuracy: 69.2800
+Epoch 11/11 Val - Loss: 1.2458 | Accuracy: 67.9300
+Epoch 12/12 Val - Loss: 1.1542 | Accuracy: 71.1300
+Epoch 13/13 Val - Loss: 1.2150 | Accuracy: 68.6300
+Epoch 14/14 Val - Loss: 1.1504 | Accuracy: 72.3700
+Epoch 15/15 Val - Loss: 1.1893 | Accuracy: 70.6700
+Epoch 16/16 Val - Loss: 1.2230 | Accuracy: 69.0600
+Epoch 17/17 Val - Loss: 1.1460 | Accuracy: 73.0400
+Epoch 18/18 Val - Loss: 1.1457 | Accuracy: 73.3100
+Epoch 19/19 Val - Loss: 1.2407 | Accuracy: 67.8400
+Epoch 20/20 Val - Loss: 1.1803 | Accuracy: 71.5200
+Epoch 21/21 Val - Loss: 1.1951 | Accuracy: 72.2300
+Epoch 22/22 Val - Loss: 1.2019 | Accuracy: 72.3600
+Epoch 23/23 Val - Loss: 1.1825 | Accuracy: 72.0600
+Epoch 24/24 Val - Loss: 1.2393 | Accuracy: 69.0000
