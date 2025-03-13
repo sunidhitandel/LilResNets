@@ -222,3 +222,4 @@ class ResNet(nn.Module):
             drop=config_dict["drop"],
             squeeze_and_excitation=config_dict["squeeze_and_excitation"],
         )
+    
