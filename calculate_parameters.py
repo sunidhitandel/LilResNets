@@ -141,5 +141,5 @@ def load_configs_from_yaml_folder(configs_dir='configs'):
     
     return configs
 configs = load_configs_from_yaml_folder()
-print(configs)
+
 print_model_configs(configs)

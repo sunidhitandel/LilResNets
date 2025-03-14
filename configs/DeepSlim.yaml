@@ -1,5 +1,5 @@
-# : 4.92M parameters
-# Mixed convolution sizes with targeted regularization for CIFAR-10
+# Total parameters : 4.85M 
+# Model 1
 model_name: "DeepSlim"
 num_blocks: [6, 4, 3]
 conv_kernel_sizes: [3, 3, 3]
@@ -8,21 +8,19 @@ num_channels: 64
 avg_pool_kernel_size: 8
 drop: 0
 squeeze_and_excitation: 1
-grad_clip: 0.15
+grad_clip: 0.08
 max_epochs: 150
 optim: "AdamW"
-lr_sched: "cosineannealingwarmrestarts"
+lr_sched: "CosineAnnealingWarmRestarts"
 momentum: 0.9
 lr: 0.09
 weight_decay: 0.001
 batch_size: 256
 num_workers: 16
-data_augmentation: 1
+data_augmentation: ["CutMix", "MixUp"]
 data_normalize: 1
 lookahead: 1
-label_smoothing: 0.15
+label_smoothing: 0.05
 use_amp: false
 early_stopping_patience: 40
-min_delta : 0.0009
-
-
+min_delta: 0.0009
