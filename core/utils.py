@@ -54,11 +54,11 @@ def get_model(config_dict: dict, logger: Logger):
 
     # Mapping model names to their respective classes
     model_map = {
-        "deepslim": deepslim.HybridResNet,
-        "resdrop": resdrop.ResNetDeepSlim,
-        "resreg": resreg.ResNetDeepSlim,
-        "reswide": reswide.ResNetDeepSlim,
-        "resmix": resmix.ResNetDeepSlim,
+        "deepslim": deepslim.ResNet,
+        "resdrop": resdrop.ResNet,
+        "resreg": resreg.ResNet,
+        "reswide": reswide.ResNet,
+        "resmix": resmix.ResNet,
         "prenet": prenet.PreResNet,
         "resnetx": resnetX.ResNet,
     }

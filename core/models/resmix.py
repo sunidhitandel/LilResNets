@@ -104,7 +104,7 @@ class BasicBlock(nn.Module):
         return out
 
 
-class ResNetDeepSlim(nn.Module):
+class ResNet(nn.Module):
     def __init__(
         self,
         block,
@@ -117,10 +117,14 @@ class ResNetDeepSlim(nn.Module):
         drop=None,
         squeeze_and_excitation=None,
     ):
-        super(ResNetDeepSlim, self).__init__()
+        super(ResNet, self).__init__()
         self.in_planes = num_channels
+        # self.avg_pool_kernel_size = avg_pool_kernel_size
         self.avg_pool_kernel_size = int(32 / (2 ** (len(num_blocks) - 1)))
 
+        """
+        # of channels Ci
+        """
         self.num_channels = num_channels
         self.conv1 = nn.Conv2d(
             3, self.num_channels, kernel_size=3, stride=1, padding=1, bias=False
@@ -132,13 +136,21 @@ class ResNetDeepSlim(nn.Module):
         if self.squeeze_and_excitation:
             self.seblock = SEBlock(channels=self.num_channels)
 
+        """
+        # of Residual Layers N
+        # of Residual Blocks Bi
+        """
         self.residual_layers = []
         for n in range(len(num_blocks)):
-            stride = 1 if n == 0 else 2
-            conv_kernel_size = conv_kernel_sizes[n] if conv_kernel_sizes else 3
+            stride = (
+                1 if n == 0 else 2
+            )  # stride=1 for first residual layer, and stride=2 for the remaining layers
+            conv_kernel_size = (
+                conv_kernel_sizes[n] if conv_kernel_sizes else 3
+            )  # setting default kernel size of block's convolutional layers
             shortcut_kernel_size = (
                 shortcut_kernel_sizes[n] if shortcut_kernel_sizes else 1
-            )
+            )  # setting default kernel size of block's skip connection (shortcut) layers
             self.residual_layers.append(
                 self._make_layer(
                     block,
@@ -154,9 +166,13 @@ class ResNetDeepSlim(nn.Module):
         self.linear = nn.Linear(
             self.num_channels * (2**n) * block.expansion, num_classes
         )
-
+        """
+        Dropout layer
+        """
         if self.drop:
-            self.dropout = nn.Dropout(self.drop)
+            self.dropout = nn.Dropout(
+                self.drop
+            )  # Define proportion or neurons to dropout
 
     def _make_layer(
         self, block, planes, num_blocks, stride, conv_kernel_size, shortcut_kernel_size
@@ -183,6 +199,9 @@ class ResNetDeepSlim(nn.Module):
             out = self.seblock(out)
         for layer in self.residual_layers:
             out = layer(out)
+        """
+        Average pool kernel size
+        """
         out = F.avg_pool2d(out, self.avg_pool_kernel_size)
         out = out.view(out.size(0), -1)
         if self.drop:
@@ -191,7 +210,8 @@ class ResNetDeepSlim(nn.Module):
         return out
 
     @classmethod
-    def from_config(cls, config_dict: dict) -> "ResNetDeepSlim":
+    def from_config(cls, config_dict: dict) -> "ResNet":
+        # Initialize model
         return cls(
             block=BasicBlock,
             num_blocks=config_dict["num_blocks"],
@@ -202,3 +222,4 @@ class ResNetDeepSlim(nn.Module):
             drop=config_dict["drop"],
             squeeze_and_excitation=config_dict["squeeze_and_excitation"],
         )
+    
