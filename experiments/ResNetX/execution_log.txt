@@ -80,23 +80,3 @@ Epoch 73/73 Val - Loss: 0.8402 | Accuracy: 86.1900
 Early stopping triggered!!!
 Training complete. Best validation accuracy: 87.95%
 Training complete. Best accuracy: 87.95%
-Starting testing...
-Loaded model from experiments/ResNetX/best_model.pt
-Model checkpoint from epoch 53
-Predictions saved to experiments/ResNetX/test_results/submission.csv
-Testing complete. File saved at: experiments/ResNetX/test_results/submission.csv
-Execution completed
-An error occurred during the execution:
-Error: Traceback (most recent call last):
-  File "/content/LilResNets/main.py", line 36, in main
-    dataset.save_sample_images(config, experiment_dir)
-  File "/content/LilResNets/core/dataset.py", line 228, in save_sample_images
-    save_samples(train_dataset, "train")
-  File "/content/LilResNets/core/dataset.py", line 219, in save_samples
-    img_pil = Image.fromarray(img)
-              ^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.11/dist-packages/PIL/Image.py", line 3300, in fromarray
-    arr = obj.__array_interface__
-          ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'Tensor' object has no attribute '__array_interface__'
-

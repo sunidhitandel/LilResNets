@@ -18,7 +18,7 @@ num_workers: 16
 data_augmentation: 1
 data_normalize: 1
 lookahead: 1
-label_smoothing: 0.1
+label_smoothing: 0.05
 use_amp: false
 early_stopping_patience: 40
 min_delta : 0.0009

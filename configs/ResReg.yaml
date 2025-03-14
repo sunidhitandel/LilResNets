@@ -1,24 +1,24 @@
 # ResReg : 3.4M parameters
 # Uses varied kernel sizes and strong regularization
 model_name: "ResReg"
-num_blocks: [3, 4, 2]
-conv_kernel_sizes: [5, 3, 3]  # Larger kernels early
+num_blocks: [3, 3, 2]
+conv_kernel_sizes: [3, 3, 3]
 shortcut_kernel_sizes: [1, 1, 1]
-num_channels: 56
+num_channels: 70
 avg_pool_kernel_size: 8
-drop: 0.3  # Moderate dropout
-squeeze_and_excitation: true
-grad_clip: 0.05  # Tighter gradient clipping
-max_epochs: 120
-optim: "rmsprop"  # RMSProp optimizer
-lr_sched: "StepLR"  # Step learning rate
+drop: 0
+squeeze_and_excitation: 1
+grad_clip: 0.1
+max_epochs: 200
+optim: "sgd"
+lr_sched: "CosineAnnealingLR"
 momentum: 0.9
-lr: 0.001
-weight_decay: 0.0015  # Strong weight decay
-batch_size: 256
+lr: 0.1
+weight_decay: 0.0005
+batch_size: 128
 num_workers: 16
 data_augmentation: 1
 data_normalize: 1
 lookahead: 1
-label_smoothing: 0.15
+label_smoothing: 0.1
 use_amp: true

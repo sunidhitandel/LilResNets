@@ -1,16 +1,16 @@
 # ResWide : 3.8M parameters
 # Wider but shallower network with targeted regularization
 model_name: "ResWide"
-num_blocks: [2, 2, 1]  # Reduced depth
-conv_kernel_sizes: [3, 3, 5]  # Larger kernels at deeper layers
-shortcut_kernel_sizes: [3, 1, 1]  # Wider shortcuts early
-num_channels: 80  # Wider channels
+num_blocks: [3, 2, 1]  # Reduced depth
+conv_kernel_sizes: [3, 3, 5]  
+shortcut_kernel_sizes: [3, 1, 1]  
+num_channels: 90  # Wider channels
 avg_pool_kernel_size: 8
-drop: 0.25
-squeeze_and_excitation: true
+drop: 0.1
+squeeze_and_excitation: 0
 grad_clip: 0.1
 max_epochs: 180
-optim: "adamw"  # AdamW optimizer
+optim: "adamw"  #
 lr_sched: "OneCycleLR"  # One cycle learning rate
 momentum: 0.85
 lr: 0.003
