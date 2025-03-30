@@ -8,6 +8,8 @@ from torch.utils.data import Dataset
 from torchvision import transforms
 
 from core import utils
+from core.augmentations import Cutout, Mixup, CutMix
+from core.augmentation import get_augmentations
 
 dataset_dir = "./data/cifar-10-python/cifar-10-batches-py/"
 val_dataset_dir = "./data/cifar-10-python/cifar-10-batches-py/test_batch"
@@ -24,10 +26,13 @@ class DataConfig:
 class CIFARDataset(Dataset):
     """CIFAR-10 dataset handler"""
 
-    def __init__(self, data, labels, transform=None):
+    def __init__(self, data, labels, transform=None, augmentations=None):
         self.data = data  # shape (N, 3072)
         self.labels = labels  # shape (N,)
         self.transform = transform
+        self.augmentations = get_augmentations({"data_augmentation": augmentations})
+        self.mixup = self.augmentations.get("MixUp", None)
+        self.cutmix = self.augmentations.get("CutMix", None)
 
     def __len__(self):
         return len(self.data)
@@ -35,8 +40,26 @@ class CIFARDataset(Dataset):
     def __getitem__(self, idx):
         img = self.data[idx].reshape(3, 32, 32).transpose(1, 2, 0).astype("uint8")
         label = self.labels[idx]
+        
         if self.transform:
             img = self.transform(img)
+        
+        # Apply Mixup or CutMix if enabled
+        if (self.mixup or self.cutmix) and np.random.random() < 0.5:
+            idx2 = np.random.randint(len(self.data))
+            img2 = self.data[idx2].reshape(3, 32, 32).transpose(1, 2, 0).astype("uint8")
+            label2 = self.labels[idx2]
+            
+            if self.transform:
+                img2 = self.transform(img2)
+                
+            if self.mixup:
+                img, label, label2, lam = self.mixup(img, img2, label, label2)
+                return img, (label, label2, lam)
+            elif self.cutmix:
+                img, label, label2, lam = self.cutmix(img, img2, label, label2)
+                return img, (label, label2, lam)
+                
         return img, label
 
 
@@ -81,6 +104,10 @@ def get_train_transforms(config):
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
         )
 
+    # Add Cutout augmentation
+    if "Cutout" in config.get("data_augmentation", []):
+        train_transforms.append(Cutout(size=8))
+
     return transforms.Compose(train_transforms)
 
 
@@ -106,7 +133,12 @@ def load_train_data(config):
         labels_list.extend(batch[b"labels"])
     X = np.concatenate(data_list, axis=0)
     y = np.array(labels_list)
-    return CIFARDataset(X, y, transform=get_train_transforms(config))
+    return CIFARDataset(
+        X, 
+        y, 
+        transform=get_train_transforms(config),
+        augmentations=config.get("data_augmentation", [])
+    )
 
 
 def load_val_data(config):
