@@ -1,0 +1,26 @@
+# Total parameters : 3.30M 
+# Model 9
+model_name: "ResWide"
+num_blocks: [3, 2, 1]
+conv_kernel_sizes: [3, 3, 5]
+shortcut_kernel_sizes: [3, 1, 1]
+num_channels: 90
+avg_pool_kernel_size: 8
+drop: 0.1
+squeeze_and_excitation: 0
+grad_clip: 0.06
+max_epochs: 180
+optim: "AdamW"
+lr_sched: "CosineAnnealingWarmRestarts"
+momentum: 0.85
+lr: 0.003
+weight_decay: 0.001
+batch_size: 256
+num_workers: 16
+data_augmentation: 1
+data_normalize: 1
+lookahead: 1
+label_smoothing: 0.1
+use_amp: true
+early_stopping_patience: 12
+min_delta: 0.0009

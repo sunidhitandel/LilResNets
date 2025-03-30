@@ -1,0 +1,8 @@
+PyYAML
+torch
+torchvision
+tqdm
+torchview
+pandas
+matplotlib
+pre-commit
