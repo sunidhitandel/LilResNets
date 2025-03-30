@@ -76,7 +76,7 @@ pip install -r requirements.txt
 python data/cifar-10-python/*
 ```
 
-## 🚀 Usage
+## Re-usability
 
 Run any model configuration using:
 ```bash
