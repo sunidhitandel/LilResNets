@@ -1,7 +1,7 @@
 # LilResNets 🚀
 > ResNets that are light on resources, heavy on performance!
 
-## 📊 Project Overview
+## Project Overview
 LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M parameters, designed for resource-constrained environments. Through extensive ablation studies, I explore the impact of various network components while maintaining high accuracy and efficiency.
 
 ### Key Features
