@@ -7,8 +7,8 @@ LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M
 ### Key Features
 - **Lightweight Models**: All variants under 5M parameters
 - **Extensive Experimentation**: 9 different model architectures
-- **Advanced Training Techniques**: Multiple data augmentations, optimizers, and schedulers
-- **Comprehensive Monitoring**: Detailed logging, visualization, and metrics tracking
+- **Comprehensive Training Techniques**: Multiple data augmentations, optimizers, and schedulers
+- **End-to-end Monitoring**: Detailed logging, visualization, and metrics tracking
 - **Resource Efficient**: Optimized for environments with limited computational resources
 
 ## 🛠️ Installation
@@ -24,9 +24,9 @@ cd LilResNets
 pip install -r requirements.txt
 ```
 
-3. Download CIFAR-10 dataset:
+3. Downloaded CIFAR-10 dataset is present in data folder:
 ```bash
-python scripts/download_data.py
+python data/cifar-10-python/*
 ```
 
 ## 🚀 Usage
@@ -189,8 +189,6 @@ Each experiment generates:
 
 Results are saved in `experiments/<model_name>/` directory.
 
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📝 License
 This project is licensed under the MIT License - see the LICENSE file for details.
