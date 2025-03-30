@@ -189,7 +189,7 @@ Multiple scheduling strategies were tested:
 
 ### Training Metrics
 - Training accuracy: Up to 99.98%
-- Test accuracy: Up to 95.47%
+- Test accuracy: Up to 95.75%
 - Early stopping patience: 12-40 epochs
 - Minimum delta: 0.0001-0.0009
 
