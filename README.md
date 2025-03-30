@@ -2,7 +2,7 @@
 > ResNets that are light on resources, heavy on performance!
 
 ## 📊 Project Overview
-LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M parameters, designed for resource-constrained environments. Through extensive ablation studies, we explore the impact of various network components while maintaining high accuracy and efficiency.
+LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M parameters, designed for resource-constrained environments. Through extensive ablation studies, I explore the impact of various network components while maintaining high accuracy and efficiency.
 
 ### Key Features
 - **Lightweight Models**: All variants under 5M parameters
@@ -58,7 +58,7 @@ All models are built on the ResNet architecture with the following key component
 - Fully connected classification layer
 
 ### Model Variants
-We experimented with 9 different architectures, each with unique characteristics:
+I experimented with 9 different architectures, each with unique characteristics:
 
 | Model | Parameters | Key Features |
 |-------|------------|--------------|
@@ -75,7 +75,7 @@ We experimented with 9 different architectures, each with unique characteristics
 ## 🔧 Training Components
 
 ### Data Augmentation
-We implemented and tested multiple augmentation strategies:
+I implemented and tested multiple augmentation strategies:
 
 1. **CutMix**
    - Replaces a patch from one image with another
@@ -98,7 +98,7 @@ We implemented and tested multiple augmentation strategies:
    - More computationally efficient
 
 ### Optimizers
-We experimented with various optimization strategies:
+I experimented with various optimization strategies:
 
 1. **AdamW**
    - Adaptive moment estimation with weight decay
