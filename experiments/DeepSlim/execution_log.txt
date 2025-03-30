@@ -1,5 +1,14 @@
-Experiment started at 2025-03-13 07:18:35
-Using device: cuda
-Total Parameters: 4910450
-Using device: cuda
-Model on GPU: True
+Experiment started at 2025-03-30 17:00:04
+Starting training...
+Using device: mps
+Initializing data loaders...
+Loading training data...
+Training data loaded successfully.
+Loading validation data...
+Validation data loaded successfully.
+Data loaders initialized successfully.
+Using device: mps
+Model on GPU: False
+Total Parameters: 4845710
+Epoch 1/1 Val - Loss: 2.0358 | Accuracy: 29.0200
+Epoch 2/2 Val - Loss: 1.6709 | Accuracy: 42.1700

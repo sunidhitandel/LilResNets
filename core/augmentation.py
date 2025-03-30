@@ -39,6 +39,25 @@ class Mixup:
         return img, label1, label2, lam
 
 
+class Cutout:
+    """Cutout augmentation"""
+    def __init__(self, size=8):
+        self.size = size
+
+    def __call__(self, img):
+        h, w = img.size(1), img.size(2)
+        cx = np.random.randint(w)
+        cy = np.random.randint(h)
+
+        x1 = np.clip(cx - self.size // 2, 0, w)
+        y1 = np.clip(cy - self.size // 2, 0, h)
+        x2 = np.clip(cx + self.size // 2, 0, w)
+        y2 = np.clip(cy + self.size // 2, 0, h)
+
+        img[:, y1:y2, x1:x2] = 0
+        return img
+
+
 def get_augmentations(config):
     """Get augmentations based on configuration"""
     augmentations = {}
@@ -51,5 +70,7 @@ def get_augmentations(config):
         augmentations["AutoAugment"] = transforms.AutoAugment()
     if "RandAugment" in config.get("data_augmentation", []):
         augmentations["RandAugment"] = transforms.RandAugment()
+    if "Cutout" in config.get("data_augmentation", []):
+        augmentations["Cutout"] = Cutout(size=8)
 
     return augmentations

@@ -17,34 +17,41 @@ from core.utils import get_model
 from core.utils import save_checkpoint
 
 
+
 def create_optimizer(config, model):
     """Create optimizer based on config"""
-    if config["optim"].lower() == "sgd":
-        optimizer = optim.SGD(
+    optimizers = {
+        "sgd": lambda: optim.SGD(
             model.parameters(),
             lr=config["lr"],
-            momentum=config["momentum"],
-            weight_decay=config["weight_decay"],
-        )
-    elif config["optim"].lower() == "adam":
-        optimizer = optim.Adam(
-            model.parameters(), lr=config["lr"], weight_decay=config["weight_decay"]
-        )
-    elif config["optim"].lower() == "adagrad":
-        optimizer = optim.Adagrad(
-            model.parameters(), lr=config["lr"], weight_decay=config["weight_decay"]
-        )
-    elif config["optim"].lower() == "rmsprop":
-        optimizer = optim.RMSprop(
+            momentum=config.get("momentum", 0),
+            weight_decay=config.get("weight_decay", 0),
+        ),
+        "adam": lambda: optim.Adam(
+            model.parameters(), lr=config["lr"], weight_decay=config.get("weight_decay", 0)
+        ),
+        "adagrad": lambda: optim.Adagrad(
+            model.parameters(), lr=config["lr"], weight_decay=config.get("weight_decay", 0)
+        ),
+        "rmsprop": lambda: optim.RMSprop(
             model.parameters(),
             lr=config["lr"],
-            momentum=config["momentum"],
-            weight_decay=config["weight_decay"],
-        )
-    else:
+            momentum=config.get("momentum", 0),
+            weight_decay=config.get("weight_decay", 0),
+        ),
+        "adamw": lambda: optim.AdamW(
+            model.parameters(), lr=config["lr"], weight_decay=config.get("weight_decay", 0)
+        ),
+        "radam": lambda: optim.RAdam(
+            model.parameters(), lr=config["lr"], weight_decay=config.get("weight_decay", 0)
+        ),
+    }
+    
+    optim_name = config["optim"].lower()
+    if optim_name not in optimizers:
         raise ValueError(f"Optimizer {config['optim']} not supported")
-    return optimizer
-
+    
+    return optimizers[optim_name]()
 
 def create_scheduler(config, optimizer):
     """Create learning rate scheduler based on config"""
@@ -163,7 +170,7 @@ def train(config: str, experiment_dir: str, logger: logger.Logger):
     """Main training function"""
     device = get_device()
     logger.log_message(f"Using device: {device}")
-    train_loader, val_loader = get_data_loaders(config)
+    train_loader, val_loader = get_data_loaders(config, logger)
 
     # Create model
     model = get_model(config, logger)

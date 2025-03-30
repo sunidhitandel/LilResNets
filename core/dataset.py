@@ -1,38 +1,23 @@
-import dataclasses
 import os
-
 import numpy as np
 import torch
-from torch.utils.data import DataLoader
-from torch.utils.data import Dataset
+from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
-
 from core import utils
-from core.augmentations import Cutout, Mixup, CutMix
 from core.augmentation import get_augmentations
 
 dataset_dir = "./data/cifar-10-python/cifar-10-batches-py/"
 val_dataset_dir = "./data/cifar-10-python/cifar-10-batches-py/test_batch"
 test_dataset_dir = "./data/cifar_test_nolabel.pkl"
 
-
-@dataclasses.dataclass
-class DataConfig:
-    add_augmentation: bool = True
-    add_jitter: bool = False
-    add_normalization: bool = True
-
-
 class CIFARDataset(Dataset):
     """CIFAR-10 dataset handler"""
 
-    def __init__(self, data, labels, transform=None, augmentations=None):
+    def __init__(self, data, labels, transform, config):
         self.data = data  # shape (N, 3072)
         self.labels = labels  # shape (N,)
-        self.transform = transform
-        self.augmentations = get_augmentations({"data_augmentation": augmentations})
-        self.mixup = self.augmentations.get("MixUp", None)
-        self.cutmix = self.augmentations.get("CutMix", None)
+        self.transform=transform
+        self.augmentations = False if config['data_augmentation']==1 else {"data_augmentation":config['data_augmentation']}
 
     def __len__(self):
         return len(self.data)
@@ -44,21 +29,17 @@ class CIFARDataset(Dataset):
         if self.transform:
             img = self.transform(img)
         
-        # Apply Mixup or CutMix if enabled
-        if (self.mixup or self.cutmix) and np.random.random() < 0.5:
-            idx2 = np.random.randint(len(self.data))
-            img2 = self.data[idx2].reshape(3, 32, 32).transpose(1, 2, 0).astype("uint8")
-            label2 = self.labels[idx2]
-            
-            if self.transform:
-                img2 = self.transform(img2)
-                
-            if self.mixup:
-                img, label, label2, lam = self.mixup(img, img2, label, label2)
-                return img, (label, label2, lam)
-            elif self.cutmix:
-                img, label, label2, lam = self.cutmix(img, img2, label, label2)
-                return img, (label, label2, lam)
+        # Apply augmentations like MixUp or CutMix
+        if self.augmentations:
+            for aug_name, aug in self.augmentations.items():
+                if aug_name in ["MixUp", "CutMix"] and np.random.random() < 0.5:
+                    idx2 = np.random.randint(len(self.data))
+                    img2 = self.data[idx2].reshape(3, 32, 32).transpose(1, 2, 0).astype("uint8")
+                    label2 = self.labels[idx2]
+                    if self.transform:
+                        img2 = self.transform(img2)
+                    img, label, label2, lam = aug(img, img2, label, label2)
+                    return img, (label, label2, lam)
                 
         return img, label
 
@@ -86,11 +67,11 @@ def get_train_transforms(config):
     """Get transforms for training data"""
     train_transforms = [transforms.ToPILImage()]
 
-    if config.add_augmentation:
+    if config.get("add_augmentation", True):
         train_transforms.extend(
             [transforms.RandomCrop(32, padding=4), transforms.RandomHorizontalFlip()]
         )
-    if config.add_jitter:
+    if config.get("add_jitter", False):
         train_transforms.append(
             transforms.ColorJitter(
                 brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1
@@ -99,14 +80,10 @@ def get_train_transforms(config):
 
     train_transforms.append(transforms.ToTensor())
 
-    if config.add_normalization:
+    if config.get("add_normalization", True):
         train_transforms.append(
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
         )
-
-    # Add Cutout augmentation
-    if "Cutout" in config.get("data_augmentation", []):
-        train_transforms.append(Cutout(size=8))
 
     return transforms.Compose(train_transforms)
 
@@ -123,8 +100,9 @@ def get_val_transforms(add_normalization=True):
     return transforms.Compose(test_transforms)
 
 
-def load_train_data(config):
+def load_train_data(config, logger):
     """Load CIFAR-10 training data"""
+    logger.log_message("Loading training data...")
     data_list, labels_list = [], []
     for i in range(1, 6):
         batch_file = os.path.join(dataset_dir, f"data_batch_{i}")
@@ -133,21 +111,25 @@ def load_train_data(config):
         labels_list.extend(batch[b"labels"])
     X = np.concatenate(data_list, axis=0)
     y = np.array(labels_list)
+    logger.log_message("Training data loaded successfully.")
     return CIFARDataset(
         X, 
         y, 
         transform=get_train_transforms(config),
-        augmentations=config.get("data_augmentation", [])
+        config=config
     )
 
 
-def load_val_data(config):
-    """Load CIFAR-10 test data"""
+def load_val_data(config, logger):
+    """Load CIFAR-10 validation data"""
+    logger.log_message("Loading validation data...")
     val_batch = utils.unpickle(val_dataset_dir)
+    logger.log_message("Validation data loaded successfully.")
     return CIFARDataset(
         val_batch[b"data"],
         val_batch[b"labels"],
-        transform=get_val_transforms(config.add_normalization),
+        transform=get_val_transforms(True),
+        config=config
     )
 
 
@@ -155,20 +137,15 @@ def load_test_data(config):
     """Load CIFAR-10 test data"""
     test_batch = utils.unpickle(test_dataset_dir)
     return CIFARTestDataset(
-        test_batch[b"data"], transform=get_val_transforms(config.add_normalization)
+        test_batch[b"data"], transform=get_val_transforms(True)
     )
 
 
-def get_data_loaders(config):
+def get_data_loaders(config, logger):
     """Get train and validation data loaders"""
-    data_config = DataConfig(
-        add_augmentation=config.get("data_augmentation", True),
-        add_normalization=config.get("data_normalize", True),
-        add_jitter=config.get("data_jitter", False),
-    )
-
-    train_dataset = load_train_data(data_config)
-    val_dataset = load_val_data(data_config)
+    logger.log_message("Initializing data loaders...")
+    train_dataset = load_train_data(config, logger)
+    val_dataset = load_val_data(config, logger)
 
     device = utils.get_device()
     train_loader = DataLoader(
@@ -187,18 +164,17 @@ def get_data_loaders(config):
         pin_memory=(device == "cuda"),
     )
 
+    logger.log_message("Data loaders initialized successfully.")
     return train_loader, val_loader
 
 
-def get_test_data_loader(config):
-    """Get train and validation data loaders"""
-    data_config = DataConfig(
-        add_augmentation=config.get("data_augmentation", False),
-        add_normalization=config.get("data_normalize", True),
-        add_jitter=config.get("data_jitter", False),
+def get_test_data_loader(config, logger):
+    """Get test data loader"""
+    logger.log_message("Loading test data...")
+    test_batch = utils.unpickle(test_dataset_dir)
+    test_dataset = CIFARTestDataset(
+        test_batch[b"data"], transform=get_val_transforms(config.get("add_normalization", True))
     )
-
-    test_dataset = load_test_data(data_config)
     test_loader = DataLoader(
         test_dataset,
         batch_size=int(config["batch_size"] / 2),
@@ -206,12 +182,16 @@ def get_test_data_loader(config):
         num_workers=16,
         pin_memory=torch.cuda.is_available(),
     )
+    logger.log_message("Test data loader initialized successfully.")
     return test_loader
 
 
 def save_sample_images(config, output_dir):
     """Save sample images from the dataset for visualization"""
-    data_config = DataConfig(add_augmentation=False, add_normalization=False)
+    data_config = {
+        "add_augmentation": False,
+        "add_normalization": False
+    }
 
     # Load train and test datasets without transforms
     train_dataset = load_train_data(data_config)
