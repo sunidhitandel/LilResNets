@@ -25,7 +25,7 @@ LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M
 | B (Blocks)      | [5, 4, 3]         |
 | C (Channels)    | [64, 128, 256]    |
 | F (Conv Kernel) | 3 × 3             |
-| K (Shortcut Ker)| 3 × 3             |
+| K (Shortcut Kernel)| 3 × 3             |
 | P (Pooling)     | 8 × 8             |
 
 ---
@@ -47,14 +47,14 @@ LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M
 
 ---
 
-### 📉 Training Plots
+### Training Plots
 
-| Training vs Validation Accuracy              | Learning Rate Schedule                  |
+| Training vs Validation Accuracy              | Learning Rate Scheduler                 |
 |---------------------------------------------|------------------------------------------|
 | ![Acc Curve](experiments/best_model/AccLossVsEpoch.png) | ![LR Curve](experiments/best_model/LRCosineAnnealingRateRedVsEpoch.jpg) |
 
 ---
-### 🧪 Data Augmentation Examples (5 Classes)
+### Data augmentation samples (5 example classes)
 
 ![Augmentation Examples](experiments/best_model/AugmentationSamples.jpg)
 
