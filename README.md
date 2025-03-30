@@ -4,12 +4,59 @@
 ## Project Overview
 LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M parameters, designed for resource-constrained environments. Through extensive ablation studies, I explore the impact of various network components while maintaining high accuracy and efficiency.
 
-### Key Features
+### 📍 Key Features
 - **Lightweight Models**: All variants under 5M parameters
 - **Extensive Experimentation**: 9 different model architectures
 - **Comprehensive Training Techniques**: Multiple data augmentations, optimizers, and schedulers
 - **End-to-end Monitoring**: Detailed logging, visualization, and metrics tracking
 - **Resource Efficient**: Optimized for environments with limited computational resources
+
+## 🏆 Best Model Summary
+
+### ⚙️ Architecture Diagram
+
+![MyResNet Architecture](experiments/best_model/resentArch.jpg)
+
+---
+### 🔍 Best Model Parameters
+
+| Parameter       | Value             |
+|-----------------|-------------------|
+| B (Blocks)      | [5, 4, 3]         |
+| C (Channels)    | [64, 128, 256]    |
+| F (Conv Kernel) | 3 × 3             |
+| K (Shortcut Ker)| 3 × 3             |
+| P (Pooling)     | 8 × 8             |
+
+---
+
+### 🔍 Training Hyperparameters
+
+| Hyperparameter     | Value                                |
+|--------------------|--------------------------------------|
+| Batch Size         | 256                                  |
+| Optimizer          | SGD                                  |
+| Learning Rate      | 0.09                                 |
+| Momentum           | 0.9                                  |
+| Weight Decay       | 0.0005                               |
+| LR Scheduler       | Cosine Annealing                     |
+| Epochs             | 200                                  |
+| Augmentation       | CutMix + Jitter + RandomCrop         |
+| Gradient Clipping  | 0.1                                  |
+| Early Stopping     | False                                |
+
+---
+
+### 📉 Training Plots
+
+| Training vs Validation Accuracy              | Learning Rate Schedule                  |
+|---------------------------------------------|------------------------------------------|
+| ![Acc Curve](experiments/best_model/AccLossVsEpoch.png) | ![LR Curve](experiments/best_model/LRCosineAnnealingRateRedVsEpoch.jpg) |
+
+---
+### 🧪 Data Augmentation Examples (5 Classes)
+
+![Augmentation Examples](experiments/best_model/AugmentationSamples.jpg)
 
 ## 🛠️ Installation
 
