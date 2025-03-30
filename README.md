@@ -13,7 +13,7 @@ LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M
 
 ## 🏆 Best Model Summary
 
-### ⚙️ Architecture Diagram
+### Architecture Diagram
 
 ![MyResNet Architecture](experiments/best_model/resentArch.jpg)
 
