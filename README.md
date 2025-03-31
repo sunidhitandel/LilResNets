@@ -1,5 +1,6 @@
 # LilResNets 🚀
 > ResNets that are light on resources, heavy on performance!
+
 > This project was part of a Kaggle competition where I single-handedly surpassed the benchmark and ranked among the top 25% of teams.
 
 ## Project Overview
