@@ -1,8 +1,10 @@
 # LilResNets 🚀
 > ResNets that are light on resources, heavy on performance!
+> This project was part of a Kaggle competition where I single-handedly surpassed the benchmark and ranked among the top 25% of teams.
 
 ## Project Overview
 LilResNets is a comprehensive study of lightweight ResNet variants, all under 5M parameters, designed for resource-constrained environments. Through extensive ablation studies, I explore the impact of various network components while maintaining high accuracy and efficiency.
+
 
 ### 📍 Key Features
 - **Lightweight Models**: All variants under 5M parameters
@@ -236,6 +238,8 @@ Each experiment generates:
 
 Results are saved in `experiments/<model_name>/` directory.
 
+## References 
+https://github.com/kuangliu/pytorch-cifar
 
-## 📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Acnowledgement 
+I would like to thank everyone whose feedback and suggestions helped me with this project. I sincerely appreciate the support of Professors Chinmay Hegde and the TAs throughout the process.
